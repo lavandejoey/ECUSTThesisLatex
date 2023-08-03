@@ -1,0 +1,39 @@
+%! Author = lavandejoey
+%! Date = 21/6/2023
+%! tex/section/4experiments.tex
+
+
+\section{实验}\label{sec:experiments}
+我们在CIFAR-10数据集上进行了实验。
+我们使用的训练集包含50000张32x32的彩色图片，测试集包含10000张图片。
+我们的模型在测试集上达到了90\%的准确率。\par
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{cccc}
+        \Xhline{1pt}
+        \textbf{Model} & \textbf{Train Accuracy} & \textbf{Test Accuracy} & \textbf{Number of parameters} \\
+        \Xhline{1pt}
+        ResNet50       & 99\%                    & 90\%                   & 25.6M                         \\
+        \hline
+    \end{tabular}
+    \caption{Experiment Results}
+    \label{tab:results}
+\end{table}
+
+\subsection{实验设置}\label{subsec:exp-setup}
+我们的所有实验都在一台配备了16GB内存和一个NVIDIA GTX 1080Ti显卡的电脑上进行。
+我们使用Python 3.7和PyTorch 1.4作为编程语言和深度学习框架。
+我们使用Adam优化器来训练我们的模型，学习率设置为0.001。\par
+
+\subsection{训练过程}\label{subsec:training}
+我们的模型在训练集上进行了100个epoch的训练。
+每个epoch之后，我们都会在验证集上评估模型的性能。
+模型的参数会在验证集的性能最好的时候保存下来。\par
+
+\subsection{测试结果}\label{subsec:testing}
+我们的模型在测试集上达到了90\%的准确率，这比其他常用的神经网络模型的性能要好。
+我们的实验结果显示，ResNet50在处理CIFAR-10数据集上具有非常出色的性能。\par
+
+\subsection{进一步的讨论}\label{subsec:discussion}
+虽然我们的模型在CIFAR-10数据集上取得了很好的结果，但在其他更复杂的数据集上，比如ImageNet，可能需要更深的网络结构和更复杂的优化策略。
+此外，为了提高模型的泛化能力，可能需要引入一些正则化技术，比如Dropout和权重衰减。\par

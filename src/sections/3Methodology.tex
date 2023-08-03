@@ -1,0 +1,106 @@
+%! Author = lavandejoey
+%! Date = 21/6/2023
+%! tex/section/3Methodology.tex
+
+
+\section{研究方法}\label{sec:methodology}
+
+在我们的研究中，我们使用了深度学习的方法进行图像分类。
+我们使用了一个名为ResNet的深度神经网络，该网络通过使用残差学习来解决深度神经网络中的退化问题。\par
+\begin{equation}
+    F(x) = H(x) - x\label{eq:resnet}
+\end{equation}
+
+这里的\(F(x)\)表示残差函数，\(H(x)\)是目标映射，\(x\)是输入。\par
+\subsection{ResNet的数学推导}\label{subsec:resnet-derivation}
+
+考虑一个多层神经网络，其目标映射为\(H(x)\)，我们可以将其表示为以下形式：
+
+\begin{equation}
+    H(x) = F(x) + x\label{eq:resnet-target}
+\end{equation}
+
+其中\(F(x)\)是残差函数，\(x\)是输入。
+在ResNet中，我们的目标是让\(F(x)\)趋近于零。
+通过这种方式，我们将模型的训练目标转化为学习残差函数，从而使得模型更容易被优化。\par
+假设我们的网络共有\(L\)层，那么在第\(l\)层，我们的目标映射可以表示为：
+
+\begin{equation}
+    H^{(l)}(x) = F^{(l)}(x) + x^{(l-1)}\label{eq:resnet-layer}
+\end{equation}
+
+其中，\(x^{(l-1)}\)是第\(l-1\)层的输出，\(F^{(l)}(x)\)是第\(l\)层的残差函数。
+通过堆叠多个这样的残差块，我们可以构建出一个深度神经网络。\par
+然后我们在代码中实现了这个网络：
+
+\begin{verbatim}
+# Here is some Python code
+import torch
+from torchvision.models import resnet50
+
+model = resnet50(pretrained=True)
+\end{verbatim}
+
+\subsection{数据预处理}\label{subsec:data-preprocessing}
+在训练模型之前，首先需要对数据进行预处理。
+我们的数据来自一个名为ImageNet的大规模视觉数据库，该数据库包含超过一千万的手动标注的图像，涵盖了二千多个类别。\par
+数据预处理主要包括图像的裁剪和缩放，以及像素值的归一化。
+我们将所有的图像都缩放到224x224的大小，并将像素值归一化到0-1的范围。
+这样处理后，可以保证模型在处理不同的图像时，具有统一的输入格式。\par
+\begin{verbatim}
+# Here is some Python code for data preprocessing
+from torchvision import transforms
+
+transform = transforms.Compose([
+    transforms.Resize((224, 224)),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+])
+\end{verbatim}
+
+\subsection{模型训练}\label{subsec:model-training}
+模型训练的目标是通过最小化在训练集上的损失，来找到模型的最优参数。
+我们使用的是交叉熵损失函数，并使用随机梯度下降（SGD）作为优化算法。
+模型的训练过程中，我们采用了早停法来防止过拟合，也就是当验证集上的损失不再下降时，我们就停止模型的训练。\par
+\begin{verbatim}
+# Here is some Python code for model training
+criterion = torch.nn.CrossEntropyLoss()
+optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
+
+for epoch in range(100):
+    for images, labels in dataloader:
+        images = images.to(device)
+        labels = labels.to(device)
+
+        outputs = model(images)
+        loss = criterion(outputs, labels)
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+\end{verbatim}
+
+\subsection{模型评估}\label{subsec:model-evaluation}
+模型的评估是在独立的测试集上进行的。
+我们使用的评估指标是准确率，也就是模型预测正确的样本数占总样本数的比例。
+为了更公正地评估模型的性能，我们还使用了混淆矩阵和ROC曲线等工具，以了解模型在不同类别上的性能。\par
+\begin{verbatim}
+# Here is some Python code for model evaluation
+from sklearn.metrics import confusion_matrix, roc_curve
+
+model.eval()
+with torch.no_grad():
+    predictions = []
+    targets = []
+    for images, labels in dataloader:
+        images = images.to(device)
+        labels = labels.to(device)
+
+        outputs = model(images)
+        _, predicted = torch.max(outputs, 1)
+        predictions.extend(predicted.tolist())
+        targets.extend(labels.tolist())
+
+cm = confusion_matrix(targets, predictions)
+roc = roc_curve(targets, predictions)
+\end{verbatim}
