@@ -77,7 +77,12 @@
 \RequirePackage{indentfirst}
 \setlength{\parindent}{2em}
 %超链接
-\RequirePackage[colorlinks, linkcolor = black, anchorcolor = black, citecolor = black]{hyperref}
+\RequirePackage[
+    colorlinks,
+    linkcolor = black,
+    anchorcolor = black,
+    citecolor = green
+]{hyperref}
 %=========================================================字体==========================================================
 %非汉字统一使用Times New Roman体
 \RequirePackage{fontspec}
@@ -89,6 +94,14 @@
 \setCJKmonofont{SimSun}
 \newcommand{\song}{\fontspec{SimSun}}
 \newcommand{\heiti}{\fontspec{SimHei}[BoldFont=SimHei]}
+%=========================================================封面=========================================================
+% Define the title page
+%中文日期格式
+\RequirePackage{datetime2} % Load the datetime2 package for date and time formatting
+\renewcommand{\DTMdisplaydate}[4]{%
+    \number#1 年 \number#2 月 \number#3 日}%
+\renewcommand{\DTMDisplaydate}[4]{%
+    \number#1 年 \number#2 月 \number#3 日}%
 %======================================================摘要和关键词======================================================
 %摘要单独成页,连续编页码,且页码位于页面下方居中,罗马数字,五号字。
 %标题“摘要”黑体小二号居中，段前、段后均设置为12磅。内容首行缩进两格，用小四号字。
@@ -123,6 +136,8 @@
     %关键词左对齐，段前距为12磅，Times New Roman粗体小四号
     \noindent{\textbf{Keywords: }}{\@enkeywords}
     \newpage\pagenumbering{arabic}\setcounter{page}{1}
+    %恢复原来的设置
+    \setlength{\parindent}{2em}
 }
 % Initialize the abstracts and keywords to empty
 \cnabstract{}{}
@@ -156,17 +171,19 @@
     \setstretch{1.25}
 }
 %一级标题用黑体四号-[标题距左边距离]{字体大小}{标签}      {标签和标题之间的距离} {画横线}             {页码}
-\titlecontents{section}[1.5em]{\sihao}{\contentslabel{1em}}{\hspace*{-1.5em}}{\titlerule*[0.6pc]{.}\contentspage[\thecontentspage]}
+\titlecontents{section}[1.5em]{\sihao}{\contentslabel{1em}}{\hspace*{-1.5em}}{\titlerule*[0.6pc]{.}\contentspage[\sihao\thecontentspage]}
 %二级标题用黑体小四号
-\titlecontents{subsection}[3.5em]{\xiaosi}{\contentslabel{2em}}{\hspace*{0em}}{\titlerule*[0.6pc]{.}\contentspage[\thecontentspage]}
+\titlecontents{subsection}[3.5em]{\xiaosi}{\contentslabel{2em}}{\hspace*{0em}}{\titlerule*[0.6pc]{.}\contentspage[\sihao\thecontentspage]}
 %三级标题用黑体五号
-\titlecontents{subsubsection}[5em]{\wuhao}{\contentslabel{3em}}{\hspace*{0em}}{\titlerule*[0.6pc]{.}\contentspage[\thecontentspage]}
+\titlecontents{subsubsection}[5em]{\wuhao}{\contentslabel{3em}}{\hspace*{0em}}{\titlerule*[0.6pc]{.}\contentspage[\sihao\thecontentspage]}
 %========================================================参考文献========================================================
 \RequirePackage[%
     backend=biber,%设置使用biber进行编译，也可以使用bibtex，但是功能更少
     style=gb7714-2015,%设置风格样式为国家标准gb7714-2015
     sorting=none%设置排序按照年份，名字，标题进行排序，若想按照引用顺序排序，将其设置为none即可
 ]{biblatex}% 参考文献包
+%设置参考文献引用格式为正常文本
+
 \newcommand{\bibsection}{%
 %参考文献（换页，黑体小二号居中，段前距、段后距分别为12磅）
     \newpage\setlength{\parskip}{12pt}

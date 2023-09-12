@@ -54,6 +54,10 @@ biber ecustthesis
 - [x] ~~页眉页脚~~
 - [x] ~~正文格式~~
 
+## 更新记录
+
+- [2023-09-13] 修复目录字体大小问题
+
 ## 贡献者
 
 - [@lavandejoey](https://github.com/lavandejoey)
