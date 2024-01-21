@@ -9,14 +9,14 @@
 我们的模型在测试集上达到了90\%的准确率。\par
 \begin{table}[ht]
     \centering
-    \begin{tabular}{cccc}
-        \Xhline{1pt}
-        \textbf{Model} & \textbf{Train Accuracy} & \textbf{Test Accuracy} & \textbf{Number of parameters} \\
-        \Xhline{1pt}
-        ResNet50       & 99\%                    & 90\%                   & 25.6M                         \\
-        \hline
-    \end{tabular}
     \caption{Experiment Results}
+    \begin{tabularx}{\textwidth}{XXXr}
+        \toprule
+        \textbf{Model} & \textbf{Train Accuracy} & \textbf{Test Accuracy} & \textbf{Number of parameters} \\
+        \midrule
+        ResNet50       & 99\%                    & 90\%                   & 25.6M                         \\
+        \bottomrule
+    \end{tabularx}
     \label{tab:results}
 \end{table}
 

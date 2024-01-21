@@ -46,15 +46,15 @@ ECUSTThesisLatex/
     ```shell
     git clone https://github.com/lavandejoey/ECUSTThesisLatex.git
     ```
-5. 在ecustthesis.tex中编辑论文内容
-6. 使用xelatex或lualatex编译ecustthesis.tex生成pdf（使用biber编译文献bib文件）
+4. 在ecustthesis.tex中编辑论文内容
+5. 使用xelatex或lualatex编译ecustthesis.tex生成pdf（使用biber编译文献bib文件）
    - 通过 JetBrain (PyCharm) / TexStudio 编译      
    - Linux:
       ```shell
       sh tex2pdf.sh
       ```
    - Windows 下点击运行`tex2pdf.bat`文件
-7. 在out目录下查看生成的pdf文件 （`$THESIS_ROOT/out/ecustthesis.pdf`）
+6. 在out目录下查看生成的pdf文件 （`$THESIS_ROOT/out/ecustthesis.pdf`）
 
 ## Todo
 
@@ -69,8 +69,9 @@ ECUSTThesisLatex/
 
 ## 更新记录
 
-- [2023-09-13] 修复目录字体大小问题
-- [2023-09-27] 新增Linux (Ubuntu 22测试)、Windows 编译脚本
+- [2024-01-21] 使用ctex替代xeCJK包，根据模板优化页眉页脚，优化公式。
+- [2023-09-13] 修复目录字体大小问题。
+- [2023-09-27] 新增Linux (Ubuntu 22测试)、Windows 编译脚本。
 
 ## 贡献者
 
